@@ -3,7 +3,7 @@ import AttrsByTag from './attributes';
 type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[Tag];
 type AttrValue = Attrs[keyof Attrs];
-type Children = Array<string | Element | Children>;
+type Children = null | string | Element | Array<Children>;
 export interface Element {
     tag: Tag;
     attrs: Attrs;
@@ -24,25 +24,32 @@ export interface StringifyOptions {
 }
 
 /** Stringify an element. @see h for creating those elements. */
-export function stringify(elt: Element, opts: StringifyOptions) {
+export function stringify(elt: Element, opts: StringifyOptions={}) {
     const main = stringify1(elt);
     return opts.includeDoctype ? doctype + main : main;
 }
 
-function stringify1(elt: string | Element | Children): string {
+function stringify1(elt: Children): string {
+    if (elt === null) return '';
     if (Array.isArray(elt)) return elt.map(stringify1).join('');
     if (typeof elt === 'string') return escapeHtml(elt);
     const attrs = stringifyAttrs(elt.attrs);
     if (voidElements.has(elt.tag)) {
-        if (elt.children.length !== 0) {
+        if (!childrenIsEmpty(elt.children)) {
             throw new Error(`Void element ${elt.tag} received children.`);
         }
         return `<${elt.tag}${attrs}>`;
     }
-    if (elt.children.length === 0) {
+    if (childrenIsEmpty(elt.children)) {
         return `<${elt.tag}${attrs}/>`;
     }
     return `<${elt.tag}${attrs}>${stringify1(elt.children)}</${elt.tag}>`;
+}
+
+function childrenIsEmpty(children: Children): boolean {
+    if (children === null) return true;
+    if (Array.isArray(children)) return children.length === 0;
+    return typeof children === 'string' && children === '';
 }
 
 /** Stringify the attributes for an element, including a leading space if not empty. */
@@ -135,8 +142,12 @@ function kebab(camel: string): string {
     return camel.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
 };
 
-export function h<T extends Tag>(tag: Tag, attrs: AttrsByTag[T], ...children: Children): Element {
-    return {tag, attrs, children};
+type JsxAttrs = {
+    [K in Tag]: AttrsByTag[K] & {children?: Children};
+};
+
+export function h<T extends Tag>(tag: Tag, attrs: AttrsByTag[T], ...children: Children[]): Element {
+    return {tag, attrs: attrs ?? {}, children};
 }
 
 type OuterElement = Element;
@@ -147,6 +158,8 @@ declare global {
         type ElementClass = never;
         interface ElementAttributesProperty { props: {}; }
         interface ElementChildrenAttribute { children: {}; }
-        type IntrinsicElements = AttrsByTag;
+        // data-* elements are special-cased by TypesScript to ignore in excess property checks, so
+        // don't need to specify here
+        type IntrinsicElements = JsxAttrs;
     }
 }
