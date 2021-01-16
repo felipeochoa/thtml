@@ -3,12 +3,15 @@ import AttrsByTag from './attributes';
 type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[Tag];
 type AttrValue = Attrs[keyof Attrs];
-type Children = null | string | Element | Array<Children>;
-export interface Element {
-    tag: Tag;
-    attrs: Attrs;
+type Children = null | string | AnyElement | Array<Children>;
+
+export interface Element<T extends Tag> {
+    tag: T;
+    attrs: AttrsByTag[T];
     children: Children;
 };
+
+type AnyElement = {[K in Tag]: Element<K>}[Tag];
 
 const doctype = '<!DOCTYPE HTML>';
 
@@ -24,7 +27,7 @@ export interface StringifyOptions {
 }
 
 /** Stringify an element. @see h for creating those elements. */
-export function stringify(elt: Element, opts: StringifyOptions={}) {
+export function stringify(elt: AnyElement, opts: StringifyOptions={}) {
     const main = stringify1(elt);
     return opts.includeDoctype ? doctype + main : main;
 }
@@ -146,15 +149,15 @@ type JsxAttrs = {
     [K in Tag]: AttrsByTag[K] & {children?: Children};
 };
 
-export function h<T extends Tag>(tag: Tag, attrs: AttrsByTag[T], ...children: Children[]): Element {
+type MaybeNull<T> = {} extends T ? T | null : T;
+
+export function h<T extends Tag>(tag: T, attrs: MaybeNull<AttrsByTag[T]>, ...children: Children[]): Element<T> {
     return {tag, attrs: attrs ?? {}, children};
 }
 
-type OuterElement = Element;
-
 declare global {
     namespace JSX {
-        type Element = OuterElement;
+        type Element = AnyElement;
         type ElementClass = never;
         interface ElementAttributesProperty { props: {}; }
         interface ElementChildrenAttribute { children: {}; }
