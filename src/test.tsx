@@ -46,6 +46,11 @@ describe('stringifying', function() {
         );
         expect(res).toEqual(`<div>Hello,<b> World</b>!</div>`);
     });
+
+    it("elides null/undefined children", function() {
+        const res = stringify(<div>a{null}b{undefined}c</div>);
+        expect(res).toBe('<div>abc</div>');
+    });
 });
 
 describe("attribute handling", function() {

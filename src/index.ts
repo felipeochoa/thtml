@@ -3,7 +3,7 @@ import AttrsByTag from './attributes';
 type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[Tag];
 type AttrValue = Attrs[keyof Attrs];
-type Children = null | string | AnyElement | Array<Children>;
+type Children = null | undefined | string | AnyElement | Array<Children>;
 
 export interface Element<T extends Tag> {
     tag: T;
@@ -33,7 +33,7 @@ export function stringify(elt: AnyElement, opts: StringifyOptions={}) {
 }
 
 function stringify1(elt: Children): string {
-    if (elt === null) return '';
+    if (elt == null) return '';
     if (Array.isArray(elt)) return elt.map(stringify1).join('');
     if (typeof elt === 'string') return escapeHtml(elt);
     const attrs = stringifyAttrs(elt.attrs);
