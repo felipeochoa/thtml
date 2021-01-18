@@ -21,6 +21,10 @@ const voidElements = new Set([
     'param', 'source', 'track', 'wbr',
 ]);
 
+const emptyElements = new Set([
+    'script',
+]);
+
 export interface StringifyOptions {
     /** If true, adds an HTML5 doctype at the beginning. */
     includeDoctype?: boolean;
@@ -44,6 +48,9 @@ function stringify1(elt: Children): string {
         return `<${elt.tag}${attrs}>`;
     }
     if (childrenIsEmpty(elt.children)) {
+        if (emptyElements.has(elt.tag)) {
+            return `<${elt.tag}${attrs}></${elt.tag}>`;
+        }
         return `<${elt.tag}${attrs}/>`;
     }
     return `<${elt.tag}${attrs}>${stringify1(elt.children)}</${elt.tag}>`;
