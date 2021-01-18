@@ -30,7 +30,7 @@ JSX:
 {
   "compilerOptions": {
     // ...
-    "jsx": "React",
+    "jsx": "react",
     "jsxFactory": "h",
   }
 }
