@@ -4,7 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "React",
+    "jsx": "react",
     "jsxFactory": "h",
     "lib": ["es2017"],
     "module": "CommonJS",
@@ -21,7 +21,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "types": []
+    "types": ["jest"]
   },
   "include": [
     "src/**/*"
