@@ -1,8 +1,8 @@
 # thtml
 Typesafe HTML template library
 
-This library is designed for server-side HTML rendering using JSX. It does not suport custom
-elements, suspense, etc. It only renders to strings, which you can send using your server.
+This library is designed for server-side HTML rendering using JSX. It does not suport effects,
+suspense, etc. It only renders to strings, which you can send using your server.
 
 The main plus of using this library is that it incoporates rich type information for HTML elements,
 so you get good autocomplete and typechecking on your templates.
@@ -39,18 +39,30 @@ JSX:
 Then make sure to `import { h } from 'thtml';` wherever you use JSX.
 
 ## Composition
-Instead of custom elements, you can compose templates by using functions. E.g.:
+You can create functional elements like in React. These should be pure functions of type `<P>(props:
+P) => Children`. If you want to accept a `children` prop, you'll likely need to use
+`stringifyChildren`.
+
+## Example
 
 ```tsx
-import { h, stringify } from 'thtml';
+import { h, stringify, stringifyChildren, AnyElement, Children, Fragment } from 'thtml';
 
-function hello(name: string) {
-    return ['Hello, ', <b>{name}</b>, '!'];
+function Greeter(props: {name: string}): AnyElement {
+    return (
+        <Fragment>
+          Hello, <b>{props.name}</b>!
+        </Fragment>
+    );
+}
+
+function Diver(props: {children: Children}): AnyElement {
+    return <div>{stringifyChildren(props.children)}</div>;
 }
 
 console.log(stringify(
-    <div>
-      {hello('World')}
-    </div>
-));
+    <Diver>
+      <Greeter name='World'/>
+    </Diver>
+)); // <div>Hello, <b>World</b>!</div>
 ```
