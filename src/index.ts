@@ -38,7 +38,7 @@ export interface StringifyOptions {
 }
 
 /** Stringify an element. @see h for creating those elements. */
-export function stringify(elt: AnyElement, opts: StringifyOptions={}) {
+export function stringify(elt: AnyElement | string | null, opts: StringifyOptions={}) {
     const main = stringify1(elt);
     return opts.includeDoctype ? doctype + main : main;
 }
@@ -191,7 +191,7 @@ export function Fragment(props: {children: Children}): AnyElement {
 
 declare global {
     namespace JSX {
-        type Element = AnyElement;
+        type Element = AnyElement | string | null;
         type ElementClass = never;
         interface ElementAttributesProperty { props: {}; }
         interface ElementChildrenAttribute { children: {}; }

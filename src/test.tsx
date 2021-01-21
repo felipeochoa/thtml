@@ -76,6 +76,14 @@ describe('stringifying', function() {
         expect(stringify(<F><b>123</b>456</F>)).toBe('<div>children=<b>123</b>456</div>');
     });
 
+    it("stringifies functional components that return null/string", function() {
+        function F(props: {ret: null | string}) {
+            return props.ret;
+        }
+        expect(stringify(<F ret={null}/>)).toBe('');
+        expect(stringify(<F ret={'<abc>'}/>)).toBe('&lt;abc&gt;');
+    });
+
     it("stringifies Fragment children", function() {
         const res = stringify(<Fragment>abc</Fragment>);
         expect(res).toEqual('abc');
