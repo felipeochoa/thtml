@@ -64,9 +64,6 @@ function stringify1(elt: Children): string {
         }
         return `<${elt.tag}${attrs}>`;
     }
-    if (childrenIsEmpty(elt.children)) {
-        return `<${elt.tag}${attrs}/>`;
-    }
     return `<${elt.tag}${attrs}>${stringify1(elt.children)}</${elt.tag}>`;
 }
 

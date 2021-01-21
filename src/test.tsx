@@ -13,14 +13,14 @@ describe('stringifying', function() {
         expect(res).toEqual(`<input type="text">`);
     });
 
-    it("stringifies child-less elements with no attributes", function() {
+    it("stringifies non-void child-less elements with no attributes", function() {
         const res = stringify(<div />);
-        expect(res).toEqual(`<div/>`);
+        expect(res).toEqual(`<div></div>`);
     });
 
     it("stringifies child-less elements with attributes", function() {
         const res = stringify(<div id="my-div" />);
-        expect(res).toEqual(`<div id="my-div"/>`);
+        expect(res).toEqual(`<div id="my-div"></div>`);
     });
 
     it("stringifies elements with string children", function() {
@@ -134,12 +134,12 @@ describe("attribute handling", function() {
 
     it("stringifies boolean-valued attributes (false)", function() {
         const res = stringify(<div contentEditable={false} />);
-        expect(res).toEqual(`<div contenteditable="false"/>`);
+        expect(res).toEqual(`<div contenteditable="false"></div>`);
     });
 
     it("stringifies boolean-valued attributes (true)", function() {
         const res = stringify(<div contentEditable={true} />);
-        expect(res).toEqual(`<div contenteditable="true"/>`);
+        expect(res).toEqual(`<div contenteditable="true"></div>`);
     });
 });
 
