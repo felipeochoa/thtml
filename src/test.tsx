@@ -1,6 +1,6 @@
 import 'jest';
 
-import { h, stringify, Children, stringifyChildren } from './index';
+import { h, stringify, stringifyChildren, Children, Fragment } from './index';
 
 describe('stringifying', function() {
     it("stringifies void elements with no attributes", function() {
@@ -74,6 +74,16 @@ describe('stringifying', function() {
         }
         expect(stringify(<F/>)).toBe('<div>children=</div>');
         expect(stringify(<F><b>123</b>456</F>)).toBe('<div>children=<b>123</b>456</div>');
+    });
+
+    it("stringifies Fragment children", function() {
+        const res = stringify(<Fragment>abc</Fragment>);
+        expect(res).toEqual('abc');
+    });
+
+    it("does not double-escape Fragment children", function() {
+        const res = stringify(<Fragment><b>1</b><i>2</i></Fragment>);
+        expect(res).toEqual('<b>1</b><i>2</i>');
     });
 });
 
