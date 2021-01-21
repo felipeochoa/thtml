@@ -3,15 +3,26 @@ import AttrsByTag from './attributes';
 type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[Tag];
 type AttrValue = Attrs[keyof Attrs];
-type Children = null | undefined | string | AnyElement | Array<Children>;
+
+export type Children = null | undefined | string | AnyElement | Array<Children>;
 
 export interface Element<T extends Tag> {
     tag: T;
     attrs: AttrsByTag[T];
     children: Children;
+    fn?: undefined;
 };
 
-type AnyElement = {[K in Tag]: Element<K>}[Tag];
+export interface FunctionElement<P> {
+    fn: (props: P) => Children;
+    attrs: P;
+}
+
+const escapedStringTag = Symbol('escapedString');
+
+type EscapedString = {tag: typeof escapedStringTag, value: string, fn?: undefined};
+
+export type AnyElement = {[K in Tag]: Element<K>}[Tag] | FunctionElement<any> | EscapedString;
 
 const doctype = '<!DOCTYPE HTML>';
 
@@ -32,10 +43,20 @@ export function stringify(elt: AnyElement, opts: StringifyOptions={}) {
     return opts.includeDoctype ? doctype + main : main;
 }
 
+/** Stringify an element's children. */
+export const stringifyChildren = (children: Children): EscapedString => ({
+    tag: escapedStringTag,
+    value: stringify1(children),
+});
+
 function stringify1(elt: Children): string {
     if (elt == null) return '';
     if (Array.isArray(elt)) return elt.map(stringify1).join('');
     if (typeof elt === 'string') return escapeHtml(elt);
+    if (elt.fn !== undefined) {
+        return stringify1(elt.fn(elt.attrs));
+    }
+    if (elt.tag === escapedStringTag) return elt.value;
     const attrs = stringifyAttrs(elt.attrs);
     if (voidElements.has(elt.tag)) {
         if (!childrenIsEmpty(elt.children)) {
@@ -151,8 +172,16 @@ type JsxAttrs = {
 
 type MaybeNull<T> = {} extends T ? T | null : T;
 
-export function h<T extends Tag>(tag: T, attrs: MaybeNull<AttrsByTag[T]>, ...children: Children[]): Element<T> {
-    return {tag, attrs: attrs ?? {}, children};
+export function h<T extends Tag>(tag: T, attrs: MaybeNull<AttrsByTag[T]>, ...children: Children[]): Element<T>;
+export function h<P extends object>(fn: (props: P) => Children, attrs: Omit<P, 'children'>, ...children: Children[]): FunctionElement<P>;
+export function h(tagOrFn: Tag | ((props: any) => Children), attrs: any, ...children: Children[]): AnyElement {
+    if (typeof tagOrFn === 'string') {
+        return {tag: tagOrFn as any, attrs: attrs ?? {}, children};
+    } else {
+        attrs = attrs ? {...attrs} : {};
+        attrs.children = children;
+        return {fn: tagOrFn, attrs};
+    }
 }
 
 declare global {

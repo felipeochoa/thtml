@@ -1,6 +1,6 @@
 import 'jest';
 
-import { h, stringify } from './index';
+import { h, stringify, Children, stringifyChildren } from './index';
 
 describe('stringifying', function() {
     it("stringifies void elements with no attributes", function() {
@@ -50,6 +50,30 @@ describe('stringifying', function() {
     it("elides null/undefined children", function() {
         const res = stringify(<div>a{null}b{undefined}c</div>);
         expect(res).toBe('<div>abc</div>');
+    });
+
+    it("stringifies functional components", function() {
+        function F(props: {a: string, b: string}) {
+            return <div>a={props.a}; b={props.b}</div>;
+        }
+        const res = stringify(<F a="1" b="2"/>);
+        expect(res).toBe('<div>a=1; b=2</div>');
+    });
+
+    it("stringifies functional components with children", function() {
+        function F(props: {a: string, children?: Children}) {
+            return <div>a={props.a}; children={stringifyChildren(props.children)}</div>;
+        }
+        expect(stringify(<F a="1"/>)).toBe('<div>a=1; children=</div>');
+        expect(stringify(<F a="1"><b>123</b>456</F>)).toBe('<div>a=1; children=<b>123</b>456</div>');
+    });
+
+    it("stringifies functional components with children but no props", function() {
+        function F(props: {children?: Children}) {
+            return <div>children={stringifyChildren(props.children)}</div>;
+        }
+        expect(stringify(<F/>)).toBe('<div>children=</div>');
+        expect(stringify(<F><b>123</b>456</F>)).toBe('<div>children=<b>123</b>456</div>');
     });
 });
 
