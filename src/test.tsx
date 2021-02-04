@@ -52,6 +52,27 @@ describe('stringifying', function() {
         expect(res).toBe('<div>abc</div>');
     });
 
+    it("stringifies style tags", function() {
+        expect(stringify(<style/>)).toBe('<style></style>');
+        expect(stringify(<style>p::before {'{ content: "<hi>"; }'}</style>))
+            .toBe('<style>p::before { content: "<hi>"; }</style>');
+        expect(stringify(<style>{'</style>XSS'}</style>)).toBe('<style><\\/style>XSS</style>');
+        expect(stringify(<style>{'</script>XSS'}</style>)).toBe('<style></script>XSS</style>');
+    });
+
+    it("stringifies script tags", function() {
+        expect(stringify(<script/>)).toBe('<script></script>');
+        expect(stringify(<script>alert({'"<hi>")'}</script>)).toBe('<script>alert("<hi>")</script>');
+        expect(stringify(<script>{'</'}script{'>XSS'}</script>)).toBe('<script><\\/script>XSS</script>');
+        expect(stringify(<script>{'</script>XSS'}</script>)).toBe('<script><\\/script>XSS</script>');
+    });
+
+    it("errors for script/style tags with non-string children", function() {
+        const child = (<div>X_X</div>) as any;
+        expect(() => stringify(<style>{child}</style>)).toThrow();
+        expect(() => stringify(<script>{child}</script>)).toThrow();
+    });
+
     it("stringifies functional components", function() {
         function F(props: {a: string, b: string}) {
             return <div>a={props.a}; b={props.b}</div>;

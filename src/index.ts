@@ -32,6 +32,9 @@ const voidElements = new Set([
     'param', 'source', 'track', 'wbr',
 ]);
 
+type RawTextTags = 'script' | 'style';
+const rawTextElem = new Set(['script', 'style']);
+
 export interface StringifyOptions {
     /** If true, adds an HTML5 doctype at the beginning. */
     includeDoctype?: boolean;
@@ -63,6 +66,16 @@ function stringify1(elt: Children): string {
             throw new Error(`Void element ${elt.tag} received children.`);
         }
         return `<${elt.tag}${attrs}>`;
+    }
+    if (rawTextElem.has(elt.tag) && !childrenIsEmpty(elt.children)) {
+        let children = elt.children;
+        if (Array.isArray(children) && children.every(c => typeof c === 'string')) {
+            children = children.join('');
+        }
+        if (typeof children !== 'string') {
+            throw new Error(`${elt.tag} should have string children only.`);
+        }
+        return `<${elt.tag}${attrs}>${escapeRaw(elt.tag, children)}</${elt.tag}>`;
     }
     return `<${elt.tag}${attrs}>${stringify1(elt.children)}</${elt.tag}>`;
 }
@@ -157,6 +170,19 @@ function escapeHtml(unsafeString: string): string {
     return unsafeString.replace(/[&<>"']/g, c => htmlEscapes[c as keyof typeof htmlEscapes]);
 }
 
+/** Escape a string for inclusion in a 'raw text' context (inline script/style). */
+function escapeRaw(tag: string, unsafeString: string): string {
+    // WhatWG 13.1.2.6 Restrictions on the contents of raw text and escapable raw text elements
+    switch (tag) {
+        case 'script':
+            return unsafeString.replace(/<\/script([\t\n\f\r >/])/gi, (_, c) => '<\\/script' + c);
+        case 'style':
+            return unsafeString.replace(/<\/style([\t\n\f\r >/])/gi, (_, c) => '<\\/style' + c);
+        default:
+            throw new Error('Unexpected tag for raw escape: ' + tag);
+    }
+}
+
 /** Convert a camel-cased string into a kebab-cased string. */
 function kebab(camel: string): string {
     // This is only used for attribute names, so only check ASCII
@@ -164,7 +190,7 @@ function kebab(camel: string): string {
 };
 
 type JsxAttrs = {
-    [K in Tag]: AttrsByTag[K] & {children?: Children};
+    [K in Tag]: AttrsByTag[K] & {children?: K extends RawTextTags ? string | string[]: Children};
 };
 
 type MaybeNull<T> = {} extends T ? T | null : T;
