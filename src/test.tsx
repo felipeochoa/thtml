@@ -28,6 +28,11 @@ describe('stringifying', function() {
         expect(res).toEqual(`<div>Hello, World!</div>`);
     });
 
+    it("stringifies elements with numeric children", function() {
+        const res = stringify(<div>Hello, {123}!</div>);
+        expect(res).toEqual(`<div>Hello, 123!</div>`);
+    });
+
     it("stringifies elements with element children", function() {
         const res = stringify(
             <div>

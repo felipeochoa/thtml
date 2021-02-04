@@ -4,7 +4,7 @@ type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[Tag];
 type AttrValue = Attrs[keyof Attrs];
 
-export type Children = null | undefined | string | AnyElement | Array<Children>;
+export type Children = null | undefined | string | number | AnyElement | Array<Children>;
 
 export interface Element<T extends Tag> {
     tag: T;
@@ -56,6 +56,7 @@ function stringify1(elt: Children): string {
     if (elt == null) return '';
     if (Array.isArray(elt)) return elt.map(stringify1).join('');
     if (typeof elt === 'string') return escapeHtml(elt);
+    if (typeof elt === 'number') return elt.toString();
     if (elt.fn !== undefined) {
         return stringify1(elt.fn(elt.attrs));
     }
