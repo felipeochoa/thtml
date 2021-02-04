@@ -43,6 +43,13 @@ You can create functional elements like in React. These should be pure functions
 P) => Children`. If you want to accept a `children` prop, you'll likely need to use
 `stringifyChildren`.
 
+## Special cases
+* `script` and `style` tags can only have string children. These are escaped specially since the
+  [content restrictions](https://html.spec.whatwg.org/multipage/syntax.html#cdata-rcdata-restrictions)
+  are different
+* [void elements](https://html.spec.whatwg.org/multipage/syntax.html#void-elements) are not allowed
+  to have any content
+
 ## Example
 
 ```tsx
