@@ -102,26 +102,11 @@ function stringifyAttrs(attrs: Attrs): string {
     return ret;
 }
 
-/** Attribute names to lowercase instead of kebab-casing. */
-const justLower = new Set([
-    'contentEditable', 'spellCheck', // BOOLEANISH_STRING
-
-    // BOOLEAN
-    'allowFullScreen', 'autoFocus', 'autoPlay', 'disablePictureInPicture', 'disableRemotePlayback',
-    'formNoValidate', 'noModule', 'noValidate', 'playsInline', 'readOnly', 'itemScope',
-
-    'rowSpan', // NUMERIC
-    'tabIndex', 'crossOrigin', // STRING
-    'formAction', // URLS (STRING)
-]);
-
 function adjustAttributeName(name: string): string {
     switch (name) {
         case 'className': return 'class';
         case 'htmlFor': return 'for';
         default:
-            if (justLower.has(name))
-                return escapeHtml(name.toLowerCase());
             return escapeHtml(kebab(name));
     }
 }

@@ -49,6 +49,8 @@ P) => Children`. If you want to accept a `children` prop, you'll likely need to 
   are different
 * [void elements](https://html.spec.whatwg.org/multipage/syntax.html#void-elements) are not allowed
   to have any content
+* Most attributes should be spelled out in lower-case, like in HTML. This library supports the
+  React-isms `className` (translated to `class`) and `htmlFor` (translated to `for`).
 
 ## Example
 

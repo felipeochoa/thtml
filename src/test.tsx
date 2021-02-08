@@ -123,7 +123,7 @@ describe('stringifying', function() {
 
 describe("attribute handling", function() {
     it("emits lower-cased attributes where needed", function() {
-        const res = stringify(<div tabIndex={1}>Hi</div>)
+        const res = stringify(<div tabindex={1}>Hi</div>)
         expect(res).toEqual(`<div tabindex="1">Hi</div>`);
     });
 
@@ -159,12 +159,12 @@ describe("attribute handling", function() {
     });
 
     it("stringifies boolean-valued attributes (false)", function() {
-        const res = stringify(<div contentEditable={false} />);
+        const res = stringify(<div contenteditable={false} />);
         expect(res).toEqual(`<div contenteditable="false"></div>`);
     });
 
     it("stringifies boolean-valued attributes (true)", function() {
-        const res = stringify(<div contentEditable={true} />);
+        const res = stringify(<div contenteditable={true} />);
         expect(res).toEqual(`<div contenteditable="true"></div>`);
     });
 });

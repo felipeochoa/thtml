@@ -235,29 +235,29 @@ interface AriaAttributes {
 
 interface HTMLAttributes extends AriaAttributes {
     // Standard HTML Attributes
-    accessKey?: string;
-    autoCapitalize?: string;
+    accesskey?: string;
+    autocapitalize?: string;
     className?: string;
     'class'?: string;
-    contentEditable?: boolean;
-    contextMenu?: string;
+    contenteditable?: boolean;
+    contextmenu?: string;
     dir?: string;
     draggable?: boolean;
     hidden?: boolean;
     id?: string;
-    inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+    inputmode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
     is?: string;
-    itemProp?: string;
-    itemScope?: boolean;
-    itemType?: string;
-    itemID?: string;
-    itemRef?: string;
+    itemprop?: string;
+    itemscope?: boolean;
+    itemtype?: string;
+    itemid?: string;
+    itemref?: string;
     lang?: string;
     placeholder?: string;
     slot?: string;
-    spellCheck?: boolean;
+    spellcheck?: boolean;
     style?: string;
-    tabIndex?: number;
+    tabindex?: number;
     title?: string;
 
     // radioGroup?: string; // FO: did not find this anywhere
@@ -276,8 +276,8 @@ interface HTMLAttributes extends AriaAttributes {
     vocab?: string;
 
     // Apple extensions/non-standard
-    autoCorrect?: string;
-    autoSave?: string;
+    autocorrect?: string;
+    autosave?: string;
     color?: string;
     results?: number;
     security?: string;
@@ -287,13 +287,13 @@ interface HTMLAttributes extends AriaAttributes {
 interface AnchorHTMLAttributes extends HTMLAttributes {
     download?: string | true;
     href?: string;
-    hrefLang?: string;
+    hreflang?: string;
     media?: string;
     ping?: string;
     rel?: string;
     target?: string;
     type?: string;
-    referrerPolicy?: string;
+    referrerpolicy?: string;
 }
 
 // tslint:disable-next-line:no-empty-interface
@@ -304,7 +304,7 @@ interface AreaHTMLAttributes extends HTMLAttributes {
     coords?: string;
     download?: string | true;
     href?: string;
-    hrefLang?: string;
+    hreflang?: string;
     media?: string;
     rel?: string;
     shape?: string;
@@ -321,14 +321,14 @@ interface BlockquoteHTMLAttributes extends HTMLAttributes {
 }
 
 interface ButtonHTMLAttributes extends HTMLAttributes {
-    autoFocus?: boolean;
+    autofocus?: boolean;
     disabled?: boolean;
     form?: string;
-    formAction?: string;
-    formEncType?: string;
-    formMethod?: string;
-    formNoValidate?: boolean;
-    formTarget?: string;
+    formaction?: string;
+    formenctype?: string;
+    formmethod?: string;
+    formnovalidate?: boolean;
+    formtarget?: string;
     name?: string;
     type?: 'submit' | 'reset' | 'button';
     value?: string | string[] | number;
@@ -358,7 +358,7 @@ interface DetailsHTMLAttributes extends HTMLAttributes {
 
 interface DelHTMLAttributes extends HTMLAttributes {
     cite?: string;
-    dateTime?: string;
+    datetime?: string;
 }
 
 interface DialogHTMLAttributes extends HTMLAttributes {
@@ -379,13 +379,13 @@ interface FieldsetHTMLAttributes extends HTMLAttributes {
 }
 
 interface FormHTMLAttributes extends HTMLAttributes {
-    acceptCharset?: string;
+    acceptcharset?: string;
     action?: string;
-    autoComplete?: string;
-    encType?: string;
+    autocomplete?: string;
+    enctype?: string;
     method?: string;
     name?: string;
-    noValidate?: boolean;
+    novalidate?: boolean;
     target?: string;
 }
 
@@ -395,65 +395,65 @@ interface HtmlHTMLAttributes extends HTMLAttributes {
 
 interface IframeHTMLAttributes extends HTMLAttributes {
     allow?: string;
-    allowFullScreen?: boolean;
-    allowTransparency?: boolean;
-    frameBorder?: number | string;
+    allowfullscreen?: boolean;
+    allowtransparency?: boolean;
+    frameborder?: number | string;
     height?: number | string;
-    marginHeight?: number;
-    marginWidth?: number;
+    marginheight?: number;
+    marginwidth?: number;
     name?: string;
-    referrerPolicy?: string;
+    referrerpolicy?: string;
     sandbox?: string;
     scrolling?: string;
     seamless?: boolean;
     src?: string;
-    srcDoc?: string;
+    srcdoc?: string;
     width?: number | string;
 }
 
 interface ImgHTMLAttributes extends HTMLAttributes {
     alt?: string;
-    crossOrigin?: "anonymous" | "use-credentials" | "";
+    crossorigin?: "anonymous" | "use-credentials" | "";
     decoding?: "async" | "auto" | "sync";
     height?: number | string;
     sizes?: string;
     src?: string;
-    srcSet?: string;
-    useMap?: string;
+    srcset?: string;
+    usemap?: string;
     width?: number | string;
 }
 
 interface InsHTMLAttributes extends HTMLAttributes {
     cite?: string;
-    dateTime?: string;
+    datetime?: string;
 }
 
 interface InputHTMLAttributes extends HTMLAttributes {
     accept?: string;
     alt?: string;
-    autoComplete?: string;
-    autoFocus?: boolean;
-    capture?: boolean | string; // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
+    autocomplete?: string;
+    autofocus?: boolean;
+    capture?: boolean | string; // https://www.w3.org/tr/html-media-capture/#the-capture-attribute
     checked?: boolean;
-    crossOrigin?: string;
+    crossorigin?: string;
     disabled?: boolean;
     form?: string;
-    formAction?: string;
-    formEncType?: string;
-    formMethod?: string;
-    formNoValidate?: boolean;
-    formTarget?: string;
+    formaction?: string;
+    formenctype?: string;
+    formmethod?: string;
+    formnovalidate?: boolean;
+    formtarget?: string;
     height?: number | string;
     list?: string;
     max?: number | string;
-    maxLength?: number;
+    maxlength?: number;
     min?: number | string;
-    minLength?: number;
+    minlength?: number;
     multiple?: boolean;
     name?: string;
     pattern?: string;
     placeholder?: string;
-    readOnly?: boolean;
+    readonly?: boolean;
     required?: boolean;
     size?: number;
     src?: string;
@@ -464,18 +464,18 @@ interface InputHTMLAttributes extends HTMLAttributes {
 }
 
 interface KeygenHTMLAttributes extends HTMLAttributes {
-    autoFocus?: boolean;
+    autofocus?: boolean;
     challenge?: string;
     disabled?: boolean;
     form?: string;
-    keyType?: string;
-    keyParams?: string;
+    keytype?: string;
+    keyparams?: string;
     name?: string;
 }
 
 interface LabelHTMLAttributes extends HTMLAttributes {
     form?: string;
-    htmlFor?: string;
+    htmlfor?: string;
     'for'?: string;
 }
 
@@ -485,9 +485,9 @@ interface LiHTMLAttributes extends HTMLAttributes {
 
 interface LinkHTMLAttributes extends HTMLAttributes {
     as?: string;
-    crossOrigin?: string;
+    crossorigin?: string;
     href?: string;
-    hrefLang?: string;
+    hreflang?: string;
     integrity?: string;
     media?: string;
     rel?: string;
@@ -504,12 +504,12 @@ interface MenuHTMLAttributes extends HTMLAttributes {
 }
 
 interface MediaHTMLAttributes extends HTMLAttributes {
-    autoPlay?: boolean;
+    autoplay?: boolean;
     controls?: boolean;
-    controlsList?: string;
-    crossOrigin?: string;
+    controlslist?: string;
+    crossorigin?: string;
     loop?: boolean;
-    mediaGroup?: string;
+    mediagroup?: string;
     muted?: boolean;
     playsinline?: boolean;
     preload?: string;
@@ -517,9 +517,9 @@ interface MediaHTMLAttributes extends HTMLAttributes {
 }
 
 interface MetaHTMLAttributes extends HTMLAttributes {
-    charSet?: string;
+    charset?: string;
     content?: string;
-    httpEquiv?: string;
+    httpequiv?: string;
     name?: string;
 }
 
@@ -538,13 +538,13 @@ interface QuoteHTMLAttributes extends HTMLAttributes {
 }
 
 interface ObjectHTMLAttributes extends HTMLAttributes {
-    classID?: string;
+    classid?: string;
     data?: string;
     form?: string;
     height?: number | string;
     name?: string;
     type?: string;
-    useMap?: string;
+    usemap?: string;
     width?: number | string;
     wmode?: string;
 }
@@ -552,7 +552,7 @@ interface ObjectHTMLAttributes extends HTMLAttributes {
 interface OlHTMLAttributes extends HTMLAttributes {
     reversed?: boolean;
     start?: number;
-    type?: '1' | 'a' | 'A' | 'i' | 'I';
+    type?: '1' | 'a' | 'a' | 'i' | 'i';
 }
 
 interface OptgroupHTMLAttributes extends HTMLAttributes {
@@ -586,19 +586,19 @@ interface ProgressHTMLAttributes extends HTMLAttributes {
 
 interface ScriptHTMLAttributes extends HTMLAttributes {
     async?: boolean;
-    charSet?: string;
-    crossOrigin?: string;
+    charset?: string;
+    crossorigin?: string;
     defer?: boolean;
     integrity?: string;
-    noModule?: boolean;
+    nomodule?: boolean;
     nonce?: string;
     src?: string;
     type?: string;
 }
 
 interface SelectHTMLAttributes extends HTMLAttributes {
-    autoComplete?: string;
-    autoFocus?: boolean;
+    autocomplete?: string;
+    autofocus?: boolean;
     disabled?: boolean;
     form?: string;
     multiple?: boolean;
@@ -612,7 +612,7 @@ interface SourceHTMLAttributes extends HTMLAttributes {
     media?: string;
     sizes?: string;
     src?: string;
-    srcSet?: string;
+    srcset?: string;
     type?: string;
 }
 
@@ -624,23 +624,23 @@ interface StyleHTMLAttributes extends HTMLAttributes {
 }
 
 interface TableHTMLAttributes extends HTMLAttributes {
-    cellPadding?: number | string;
-    cellSpacing?: number | string;
+    cellpadding?: number | string;
+    cellspacing?: number | string;
     summary?: string;
 }
 
 interface TextareaHTMLAttributes extends HTMLAttributes {
-    autoComplete?: string;
-    autoFocus?: boolean;
+    autocomplete?: string;
+    autofocus?: boolean;
     cols?: number;
-    dirName?: string;
+    dirname?: string;
     disabled?: boolean;
     form?: string;
-    maxLength?: number;
-    minLength?: number;
+    maxlength?: number;
+    minlength?: number;
     name?: string;
     placeholder?: string;
-    readOnly?: boolean;
+    readonly?: boolean;
     required?: boolean;
     rows?: number;
     value?: string | string[] | number;
@@ -649,23 +649,23 @@ interface TextareaHTMLAttributes extends HTMLAttributes {
 
 interface TdHTMLAttributes extends HTMLAttributes {
     align?: "left" | "center" | "right" | "justify" | "char";
-    colSpan?: number;
+    colspan?: number;
     headers?: string;
-    rowSpan?: number;
+    rowspan?: number;
     scope?: string;
     valign?: "top" | "middle" | "bottom" | "baseline";
 }
 
 interface ThHTMLAttributes extends HTMLAttributes {
     align?: "left" | "center" | "right" | "justify" | "char";
-    colSpan?: number;
+    colspan?: number;
     headers?: string;
-    rowSpan?: number;
+    rowspan?: number;
     scope?: string;
 }
 
 interface TimeHTMLAttributes extends HTMLAttributes {
-    dateTime?: string;
+    datetime?: string;
 }
 
 interface TrackHTMLAttributes extends HTMLAttributes {
@@ -673,20 +673,20 @@ interface TrackHTMLAttributes extends HTMLAttributes {
     kind?: string;
     label?: string;
     src?: string;
-    srcLang?: string;
+    srclang?: string;
 }
 
 interface VideoHTMLAttributes extends MediaHTMLAttributes {
     height?: number | string;
-    playsInline?: boolean;
+    playsinline?: boolean;
     poster?: string;
     width?: number | string;
 }
 
 interface WebViewHTMLAttributes extends HTMLAttributes {
-    allowFullScreen?: boolean;
+    allowfullscreen?: boolean;
     allowpopups?: boolean;
-    autoFocus?: boolean;
+    autofocus?: boolean;
     autosize?: boolean;
     blinkfeatures?: string;
     disableblinkfeatures?: string;
