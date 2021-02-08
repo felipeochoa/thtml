@@ -247,6 +247,11 @@ interface HTMLAttributes extends AriaAttributes {
     id?: string;
     inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
     is?: string;
+    itemProp?: string;
+    itemScope?: boolean;
+    itemType?: string;
+    itemID?: string;
+    itemRef?: string;
     lang?: string;
     placeholder?: string;
     slot?: string;
@@ -270,15 +275,10 @@ interface HTMLAttributes extends AriaAttributes {
     typeof?: string;
     vocab?: string;
 
-    // Non-standard Attributes
+    // Apple extensions/non-standard
     autoCorrect?: string;
     autoSave?: string;
     color?: string;
-    itemProp?: string;
-    itemScope?: boolean;
-    itemType?: string;
-    itemID?: string;
-    itemRef?: string;
     results?: number;
     security?: string;
     unselectable?: 'on' | 'off';
