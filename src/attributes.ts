@@ -236,6 +236,7 @@ interface AriaAttributes {
 interface HTMLAttributes extends AriaAttributes {
     // Standard HTML Attributes
     accessKey?: string;
+    autoCapitalize?: string;
     className?: string;
     'class'?: string;
     contentEditable?: boolean;
@@ -244,6 +245,8 @@ interface HTMLAttributes extends AriaAttributes {
     draggable?: boolean;
     hidden?: boolean;
     id?: string;
+    inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+    is?: string;
     lang?: string;
     placeholder?: string;
     slot?: string;
@@ -252,10 +255,7 @@ interface HTMLAttributes extends AriaAttributes {
     tabIndex?: number;
     title?: string;
 
-    // Unknown
-    inputMode?: string;
-    is?: string;
-    radioGroup?: string; // <command>, <menuitem>
+    // radioGroup?: string; // FO: did not find this anywhere
 
     // WAI-ARIA
     role?: string;
@@ -271,7 +271,6 @@ interface HTMLAttributes extends AriaAttributes {
     vocab?: string;
 
     // Non-standard Attributes
-    autoCapitalize?: string;
     autoCorrect?: string;
     autoSave?: string;
     color?: string;
