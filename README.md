@@ -51,6 +51,10 @@ P) => Children`. If you want to accept a `children` prop, you'll likely need to 
   to have any content
 * Most attributes should be spelled out in lower-case, like in HTML. This library supports the
   React-isms `className` (translated to `class`) and `htmlFor` (translated to `for`).
+* SVG attributes should be written out in camelCase. `thtml` will automatically output camel or
+  kebab case as appropriate (e.g. `viewBox` vs. `font-family`)
+* SVG attributes requiring namespacing should also be camelCased. E.g., for `xml:lang`, use
+  `xmlLang`, and for `xlink:href` use `xlinkHref`
 
 ## Example
 
