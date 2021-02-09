@@ -67,7 +67,7 @@ describe('stringifying', function() {
 
     it("stringifies script tags", function() {
         expect(stringify(<script/>)).toBe('<script></script>');
-        expect(stringify(<script>alert({'"<hi>")'}</script>)).toBe('<script>alert("<hi>")</script>');
+        expect(stringify(<script>alert({'"<hi>"'})</script>)).toBe('<script>alert("<hi>")</script>');
         expect(stringify(<script>{'</'}script{'>XSS'}</script>)).toBe('<script><\\/script>XSS</script>');
         expect(stringify(<script>{'</script>XSS'}</script>)).toBe('<script><\\/script>XSS</script>');
     });
@@ -130,6 +130,16 @@ describe("attribute handling", function() {
     it("emits kebab-cases attributes where needed", function() {
         const res = stringify(<div ariaDescribedby="other-elt" data-ix={123}>Hi!</div>)
         expect(res).toEqual(`<div aria-describedby="other-elt" data-ix="123">Hi!</div>`);
+    });
+
+    it("emits namespaced attributes where needed", function() {
+        const res = stringify(<svg xmlLang="en"/>);
+        expect(res).toEqual(`<svg xml:lang="en"></svg>`);
+    });
+
+    it("emits camel-cased attributes where needed", function() {
+        const res = stringify(<svg viewBox="0 0 10 10"/>);
+        expect(res).toEqual(`<svg viewBox="0 0 10 10"></svg>`);
     });
 
     it("elides attributes set to null/undefined", function() {

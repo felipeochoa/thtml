@@ -1,7 +1,9 @@
-import AttrsByTag from './attributes';
+import HtmlAttrs from './attributes';
+import SvgAttrs from './svg-attributes';
 
+type AttrsByTag = HtmlAttrs & SvgAttrs
 type Tag = keyof AttrsByTag;
-type Attrs = AttrsByTag[Tag];
+type Attrs = AttrsByTag[keyof AttrsByTag];
 type AttrValue = Attrs[keyof Attrs];
 
 export type Children = null | undefined | string | number | AnyElement | Array<Children>;
@@ -102,11 +104,33 @@ function stringifyAttrs(attrs: Attrs): string {
     return ret;
 }
 
+const namespaceAttrs = new Set([
+    // Attributes for which the first segment is a namespace
+    'xmlBase', 'xmlLang', 'xmlSpace',
+    'xlinkHref', 'xlinkType', 'xlinkRole', 'xlinkArcrole', 'xlinkTitle', 'xlinkShow', 'xlinkActuate',
+]);
+
+const camelAttrs = new Set([
+    // Attributes that shouldn't be kebab-cased
+    'allowReorder','attributeName','attributeType','autoReverse','baseFrequency', 'baseProfile', 'calcMode',
+    'clipPathUnits', 'contentScriptType', 'contentStyleType', 'diffuseConstant', 'edgeMode',
+    'externalResourcesRequired', 'filterRes', 'filterUnits', 'glyphRef', 'gradientTransform', 'gradientUnits',
+    'kernelMatrix', 'kernelUnitLength', 'keyPoints', 'keySplines', 'keyTimes', 'lengthAdjust', 'limitingConeAngle',
+    'markerHeight', 'markerUnits', 'markerWidth', 'maskContentUnits', 'maskUnits', 'numOctaves', 'pathLength',
+    'patternContentUnits', 'patternTransform', 'patternUnits', 'pointsAtX', 'pointsAtY', 'pointsAtZ',
+    'preserveAlpha', 'preserveAspectRatio', 'primitiveUnits', 'referrerPolicy', 'refX', 'refY', 'repeatCount',
+    'repeatDur', 'requiredExtensions', 'requiredFeatures', 'specularConstant', 'specularExponent', 'spreadMethod',
+    'startOffset', 'stdDeviation', 'stitchTiles', 'surfaceScale', 'systemLanguage', 'tableValues', 'targetX',
+    'targetY', 'textLength', 'viewBox', 'viewTarget', 'xChannelSelector', 'yChannelSelector', 'zoomAndPan',
+]);
+
 function adjustAttributeName(name: string): string {
     switch (name) {
         case 'className': return 'class';
         case 'htmlFor': return 'for';
         default:
+            if (camelAttrs.has(name)) return name;
+            if (namespaceAttrs.has(name)) return kebab(name).replace('-', ':');
             return escapeHtml(kebab(name));
     }
 }
