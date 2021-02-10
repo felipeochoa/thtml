@@ -42,6 +42,8 @@
  */
 
 interface AriaAttributes {
+    /** Define what an element is or does. E.g., navigation, complementary, banner, search, tabgroup, tab. */
+    role?: string; // WAI-ARIA
     /** Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application. */
     ariaActivedescendant?: string;
     /** Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the ariaRelevant attribute. */

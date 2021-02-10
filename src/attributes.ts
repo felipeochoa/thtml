@@ -72,9 +72,6 @@ interface HTMLAttributes extends AriaAttributes {
 
     // radioGroup?: string; // FO: did not find this anywhere
 
-    // WAI-ARIA
-    role?: string;
-
     // RDFa Attributes
     about?: string;
     datatype?: string;

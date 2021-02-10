@@ -142,6 +142,11 @@ describe("attribute handling", function() {
         expect(res).toEqual(`<svg viewBox="0 0 10 10"></svg>`);
     });
 
+    it("allows aria roles in svg", function() {
+        const res = stringify(<svg role="logo" ariaDescribedby="description"><path d="l1,1l0,1z"/></svg>);
+        expect(res).toEqual(`<svg role="logo" aria-describedby="description"><path d="l1,1l0,1z"></path></svg>`);
+    });
+
     it("elides attributes set to null/undefined", function() {
         const res = stringify(
             <div ariaDescribedby={undefined} data-ix={null} className={undefined} id="xyz">Hi!</div>,
