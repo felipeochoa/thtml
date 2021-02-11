@@ -26,6 +26,14 @@ describe('stringifying', function() {
     it("stringifies elements with string children", function() {
         const res = stringify(<div>Hello, World!</div>);
         expect(res).toEqual(`<div>Hello, World!</div>`);
+
+        const res2 = stringify(
+            <div>
+              Hello,
+              World!
+            </div>
+        );
+        expect(res2).toEqual(`<div>Hello, World!</div>`);
     });
 
     it("stringifies elements with numeric children", function() {
