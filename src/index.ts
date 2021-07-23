@@ -1,8 +1,8 @@
 import HtmlAttrs from './attributes';
 import SvgAttrs from './svg-attributes';
 
-type AttrsByTag = HtmlAttrs & SvgAttrs
-type Tag = keyof AttrsByTag;
+export type AttrsByTag = HtmlAttrs & SvgAttrs
+export type Tag = keyof AttrsByTag;
 type Attrs = AttrsByTag[keyof AttrsByTag];
 type AttrValue = Attrs[keyof Attrs];
 
@@ -22,7 +22,7 @@ export interface FunctionElement<P> {
 
 const escapedStringTag = Symbol('escapedString');
 
-type EscapedString = {tag: typeof escapedStringTag, value: string, fn?: undefined};
+export type EscapedString = {tag: typeof escapedStringTag, value: string, fn?: undefined};
 
 export type AnyElement = {[K in Tag]: Element<K>}[Tag] | FunctionElement<any> | EscapedString;
 
