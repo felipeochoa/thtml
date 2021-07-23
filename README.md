@@ -40,7 +40,7 @@ Then make sure to `import { h } from 'thtml';` wherever you use JSX.
 
 ## Composition
 You can create functional elements like in React. These should be pure functions of type `<P>(props:
-P) => Children`. If you want to accept a `children` prop, you'll likely need to use
+P) => Children`. If you want to accept a `children` prop, you may need to use
 `stringifyChildren`.
 
 ## Special cases
@@ -59,9 +59,9 @@ P) => Children`. If you want to accept a `children` prop, you'll likely need to 
 ## Example
 
 ```tsx
-import { h, stringify, stringifyChildren, AnyElement, Children, Fragment } from 'thtml';
+import { h, stringify, Children, Fragment } from 'thtml';
 
-function Greeter(props: {name: string}): AnyElement {
+function Greeter(props: {name: string}): JSX.Element {
     return (
         <Fragment>
           Hello, <b>{props.name}</b>!
@@ -69,8 +69,8 @@ function Greeter(props: {name: string}): AnyElement {
     );
 }
 
-function Diver(props: {children: Children}): AnyElement {
-    return <div>{stringifyChildren(props.children)}</div>;
+function Diver(props: {children: Children}): JSX.Element {
+    return <div>{props.children}</div>;
 }
 
 console.log(stringify(
