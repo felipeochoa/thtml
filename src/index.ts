@@ -218,8 +218,8 @@ export function h(tagOrFn: Tag | ((props: any) => Children), attrs: any, ...chil
 }
 
 /** Render its children without any wrapping elements. */
-export function Fragment(props: {children: Children}): AnyElement {
-    return stringifyChildren(props.children);
+export function Fragment(props: {children: Children}): FunctionElement<{children: Children}> {
+    return {fn: p => p.children, attrs: props};
 }
 
 declare global {
