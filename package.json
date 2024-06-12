@@ -1,6 +1,6 @@
 {
   "name": "thtml",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Typesafe HTML templating for NodeJS",
   "main": "build/index.js",
   "repository": "git@github.com:felipeochoa/thtml.git",
