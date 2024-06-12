@@ -138,10 +138,10 @@ function adjustAttributeName(name: string): string {
 const propTypes: Partial<Record<string, 'BOOLEAN' | 'OVERLOADED_BOOLEAN'>> = {};
 // cf. React (v17.0.1/packages/react-dom/src/shared/DOMProperty.js#L236-625)
 [
-    'allowFullScreen', 'async', 'autoFocus', 'autoPlay', 'controls', 'default', 'defer', 'disabled',
-    'disablePictureInPicture', 'disableRemotePlayback', 'formNoValidate', 'hidden', 'loop', 'noModule',
-    'noValidate', 'open', 'playsInline', 'readOnly', 'required', 'reversed', 'scoped', 'seamless',
-    'itemScope', 'checked', 'multiple', 'muted', 'selected',
+    'allowfullscreen', 'async', 'autofocus', 'autoplay', 'controls', 'default', 'defer', 'disabled',
+    'disablePictureInPicture', 'disableRemotePlayback', 'formnovalidate', 'hidden', 'loop', 'nomodule',
+    'novalidate', 'open', 'playsinline', 'readonly', 'required', 'reversed', 'scoped', 'seamless',
+    'itemscope', 'checked', 'multiple', 'muted', 'selected',
 ].forEach(attr => propTypes[attr] = 'BOOLEAN');
 ['capture', 'download'].forEach(attr => propTypes[attr] = 'OVERLOADED_BOOLEAN');
 
